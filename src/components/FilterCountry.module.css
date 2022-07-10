@@ -1,0 +1,31 @@
+.filter {
+  margin: 20px 10px;
+  padding: 0.25rem;
+  display: flex;
+  column-gap: 10px;
+}
+
+.filter input {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #bbb;
+}
+button {
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 0.2rem 1rem;
+  /* color: white; */
+}
+
+button:hover {
+  -webkit-box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 15px,
+    inset rgba(0, 0, 0, 0.15) 0px -10px 20px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 15px,
+    inset rgba(0, 0, 0, 0.15) 0px -10px 20px;
+  -o-box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 15px,
+    inset rgba(0, 0, 0, 0.15) 0px -10px 20px;
+  box-shadow: rgba(197, 182, 182, 0.8) 0px 5px 15px,
+    inset rgba(222, 219, 219, 0.15) 0px -10px 20px;
+}
