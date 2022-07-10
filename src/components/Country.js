@@ -1,12 +1,15 @@
 import c from "./Country.module.css";
-import headerImage from "../images/computer.jpg";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useCountry } from "./store/CountryProvider";
 
 const Country = ({ countries }) => {
+  const { setFilterCountry } = useCountry();
   return (
-    <Link className={c.link} to={`/detail/${countries.name.common}`}>
+    <Link
+      className={c.link}
+      to={`/detail/${countries.name.common}`}
+      onClick={() => setFilterCountry(true)}
+    >
       <div className={c.card}>
         <div className={c.header}>
           <img src={countries.flags.png} alt={"country-flag"} />

@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import c from "./FilterCountry.module.css";
 import { useCountry } from "./store/CountryProvider";
 
 const FilterCountry = (props) => {
+  const history = useHistory();
   const [filterInput, setFilterInput] = useState("");
   const { countries, setFilterCountry, filteredCountry } = useCountry();
   console.log("filterinput==>", filterInput);
@@ -21,6 +23,7 @@ const FilterCountry = (props) => {
 
   const seeAllHandler = () => {
     setFilterCountry(false);
+    history.push("/");
   };
 
   let seeAll;
