@@ -4,6 +4,8 @@ import { useCountry } from "./store/CountryProvider";
 
 const Country = ({ countries }) => {
   const { setFilterCountry } = useCountry();
+  const population = countries.population.toLocaleString("en-US");
+
   return (
     <Link
       className={c.link}
@@ -20,7 +22,7 @@ const Country = ({ countries }) => {
           </div>
           <div className={c.stack}>
             <h5>Population:</h5>
-            <p>{countries.population}</p>
+            <p>{population}</p>
           </div>
           <div className={c.stack}>
             <h5>Region:</h5>

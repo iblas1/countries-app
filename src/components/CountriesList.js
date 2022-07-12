@@ -1,37 +1,22 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Card from "./UI/CardUI";
-import c from "./CountriesList.module.css";
 import Country from "./Country";
 import { useCountry } from "./store/CountryProvider";
 import LoadingSpinner from "./UI/LoadingSpinner";
 import useHttp from "./hooks/usehttp";
+import { restCountryUrl, restCountryParams } from "./utils/url";
 
-const url = "https://restcountries.com/v3.1/all";
 const CountriesList = () => {
-  const { countries, setCountries, filteredCountry } = useCountry();
+  const { countries, setCountries, filterInput, filteredCountry } =
+    useCountry();
   const { loading, getCountry } = useHttp();
-  //      {
-  //     params: {
-  //       fields: "name,population,region,capital,flags,callingCodes",
-  //     },
-  //   }
+
   useEffect(() => {
     const receiveData = (data) => {
       setCountries(data);
     };
-    getCountry(url, receiveData);
-    // axios
-    //   .get(
-    //     url
-    //   )
-    //   .then((res) => {
-    //     const { data } = res;
-    //     console.log(data);
-    //     setCountries(data);
-    //   })
-    //   .catch((err) => console.log(err));
-  }, []);
+    getCountry(restCountryUrl, receiveData, restCountryParams);
+  }, [getCountry, setCountries]);
   console.log(loading);
 
   const compare = (a, b) => {
@@ -43,29 +28,12 @@ const CountriesList = () => {
     }
     return 0;
   };
-  const slicedCountry = [...countries].sort(compare);
+  const slicedCountry = [...countries]
+    .filter((country) =>
+      country.name.common.toLowerCase().includes(filterInput.toLowerCase())
+    )
+    .sort(compare);
   console.log(slicedCountry);
-
-  //   if (slicedCountry.length < 1) {
-  //     return <LoadingSpinner />;
-  //   }
-  slicedCountry.length < 1 ? (
-    <LoadingSpinner />
-  ) : filteredCountry.length >= 1 ? (
-    <div className={c.body}>
-      <div className={c.main}>
-        {filteredCountry.map((country) => (
-          <Country countries={country} key={country.name.common} />
-        ))}
-      </div>
-    </div>
-  ) : (
-    <Card>
-      {slicedCountry.map((country) => (
-        <Country countries={country} key={country.name.common} />
-      ))}
-    </Card>
-  );
 
   let display;
 
@@ -85,22 +53,22 @@ const CountriesList = () => {
   }
   if (filteredCountry.length >= 1) {
     display = (
-      <div className={c.body}>
-        <div className={c.main}>
-          {filteredCountry.map((country) => (
+      <Card>
+        {filteredCountry
+          .filter((country) =>
+            country.name.common
+              .toLowerCase()
+              .includes(filterInput.toLowerCase())
+          )
+          .sort(compare)
+          .map((country) => (
             <Country countries={country} key={country.name.common} />
           ))}
-        </div>
-      </div>
+      </Card>
     );
   }
 
   return <>{display}</>;
-  // <Card>
-  //   {slicedCountry.map((country) => (
-  //     <Country countries={country} key={country.name.common} />
-  //   ))}
-  // </Card>
 };
 
 export default CountriesList;

@@ -1,45 +1,63 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import c from "./FilterCountry.module.css";
 import { useCountry } from "./store/CountryProvider";
 
 const FilterCountry = (props) => {
+  const [selectItem, setSelectItem] = useState("");
   const history = useHistory();
-  const [filterInput, setFilterInput] = useState("");
-  const { countries, setFilterCountry, filteredCountry } = useCountry();
+  const {
+    countries,
+    setFilterCountry,
+    filteredCountry,
+    filterInput,
+    setFilterInput,
+  } = useCountry();
   console.log("filterinput==>", filterInput);
   console.log("countries=>", countries);
-  const searchHandler = (e) => {
-    if (filterInput.trim().length === 0) {
-      return;
+
+  useEffect(() => {
+    if (selectItem) {
+      const filterCount = countries.filter(
+        (country) => country.region === selectItem
+      );
+      setFilterCountry(filterCount);
     }
-    const searchCountry = countries.filter((country) =>
-      country.name.common.toLowerCase().includes(filterInput.toLowerCase())
-    );
-    setFilterCountry(searchCountry);
-    setFilterInput("");
-    console.log("after search", countries);
-  };
+  }, [selectItem, countries, setFilterCountry]);
+  console.log(filteredCountry);
 
-  const seeAllHandler = () => {
-    setFilterCountry(false);
-    history.push("/");
-  };
+  console.log(selectItem);
 
-  let seeAll;
-  if (filteredCountry) {
-    seeAll = <button onClick={seeAllHandler}>see All Countries</button>;
-  }
+  console.log(selectItem);
+
   return (
-    <div className={c.filter}>
-      <input
-        value={filterInput}
-        type={"text"}
-        name={"filter"}
-        onChange={(e) => setFilterInput(e.target.value)}
-      />
-      <button onClick={searchHandler}>find</button>
-      {seeAll}
+    <div className={c.main}>
+      <div className={c.filter}>
+        <input
+          value={filterInput}
+          type={"text"}
+          name={"filter"}
+          onChange={(e) => setFilterInput(e.target.value)}
+        />
+      </div>
+      <div className={c.filter}>
+        <select
+          defaultValue={""}
+          className={c.select}
+          name="cars"
+          id="regions"
+          onChange={(e) => setSelectItem(e.target.value)}
+        >
+          <option value="" disabled>
+            Filter by Region
+          </option>
+          <option value="Africa">Africa</option>
+          <option value="Americas">Americas</option>
+          <option value="Asia">Asia</option>
+          <option value="Europe">Europe</option>
+          <option value="Oceania">Oceania</option>
+        </select>
+      </div>
     </div>
   );
 };

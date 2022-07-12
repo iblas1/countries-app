@@ -1,10 +1,10 @@
 const { default: axios } = require("axios");
-const { useState } = require("react");
+const { useState, useCallback } = require("react");
 
 const useHttp = () => {
   const [loading, setLoading] = useState(true);
 
-  const getCountry = (url, apply, field) => {
+  const getCountry = useCallback((url, apply, field) => {
     const arg = field ? field : null;
     setLoading(true);
     axios
@@ -16,7 +16,7 @@ const useHttp = () => {
       .finally(() => {
         setLoading(false);
       });
-  };
+  }, []);
   return {
     loading,
     getCountry,

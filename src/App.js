@@ -10,9 +10,9 @@ import CountryProvider, {
 function App() {
   return (
     <CountryProvider>
-      <FilterCountry />
       <Switch>
         <Route path={"/"} exact>
+          <FilterCountry />
           <div>
             <CountriesList />
           </div>

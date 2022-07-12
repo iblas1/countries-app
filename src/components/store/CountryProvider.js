@@ -8,6 +8,8 @@ export const countryContext = React.createContext({
   filteredCountry: false,
   setCountries: () => {},
   setFilterCountry: () => {},
+  filterInput: "",
+  setFilterInput: () => {},
 });
 
 export const useCountry = () => {
@@ -15,10 +17,13 @@ export const useCountry = () => {
   return ctx;
 };
 const CountryProvider = (props) => {
+  const [filterInput, setFilterInput] = useState("");
   const [country, setCountry] = useState([]);
   const [filteredCountry, setFilterCountry] = useState(false);
   const [countries, setCountries] = useState([]);
   const value = {
+    filterInput: filterInput,
+    setFilterInput: setFilterInput,
     country: country,
     setCountry: setCountry,
     filteredCountry: filteredCountry,

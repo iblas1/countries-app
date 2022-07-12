@@ -1,11 +1,24 @@
+/*#202d36 dark mode color */
+.dark {
+  background-color: #202d36;
+}
 .body {
+  position: relative;
   background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
-
+.back {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  background-color: white;
+  border: 1px solid #bbb;
+  padding: 10px 1rem;
+  border-radius: 10px;
+}
 .main {
   border-radius: 10px;
   display: flex;

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import c from "./SingleCountry.module.css";
 import axios from "axios";
 import LoadingSpinner from "./UI/LoadingSpinner";
 const SingleCountry = () => {
   const [country, setCountry] = useState([]);
+  const history = useHistory();
   const params = useParams();
   useEffect(() => {
     axios
@@ -22,14 +23,19 @@ const SingleCountry = () => {
     console.log(country[0].currencies);
     const currency = Object.values(country[0].currencies)[0];
     currencies = currency.name;
+    // console.log(country[0].population.toLocaleString("en-US"));
   }
-
+  const population =
+    country.length > 0 ? country[0].population.toLocaleString("en-US") : "";
   return country.length < 1 ? (
     <div>
       <LoadingSpinner />
     </div>
   ) : (
     <div className={c.body}>
+      <button className={c.back} onClick={() => history.goBack()}>
+        Back
+      </button>
       <div className={c.main}>
         <div className={c.part1}>
           <img src={country[0].flags.svg} alt="flag" />
@@ -42,7 +48,7 @@ const SingleCountry = () => {
                 <b>Native name:</b> {country[0].name.official}
               </div>
               <div>
-                <b>Population:</b> {country[0].population}
+                <b>Population:</b> {population}
               </div>
               <div>
                 <b>Region:</b> {country[0].region}
