@@ -1,12 +1,10 @@
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 import CountriesList from "./components/CountriesList";
-import Country from "./components/Country";
 import FilterCountry from "./components/FilterCountry";
-import SingleCountry from "./components/SingleCountry";
-import CountryProvider, {
-  useCountry,
-} from "./components/store/CountryProvider";
+import CountryProvider from "./components/store/CountryProvider";
 
+const SingleCountry = React.lazy(() => import("./components/SingleCountry"));
 function App() {
   return (
     <CountryProvider>

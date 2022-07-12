@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import c from "./FilterCountry.module.css";
 import { useCountry } from "./store/CountryProvider";
 
 const FilterCountry = (props) => {
   const [selectItem, setSelectItem] = useState("");
-  const history = useHistory();
   const {
     countries,
     setFilterCountry,

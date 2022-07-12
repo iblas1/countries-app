@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import c from "./SingleCountry.module.css";
-import axios from "axios";
 import LoadingSpinner from "./UI/LoadingSpinner";
+import useHttp from "./hooks/usehttp";
 const SingleCountry = () => {
+  const { getCountry, loading } = useHttp();
   const [country, setCountry] = useState([]);
   const history = useHistory();
   const params = useParams();
   useEffect(() => {
-    axios
-      .get(`https://restcountries.com/v3.1/name/${params.countryId}`)
-      .then((res) => {
-        setCountry(res.data);
-      });
-  }, [params.countryId]);
+    const getData = (data) => {
+      setCountry(data);
+    };
+    getCountry(
+      `https://restcountries.com/v3.1/name/${params.countryId}`,
+      getData
+    );
+  }, [params.countryId, getCountry]);
   console.log(country);
   let languages = [];
   let currencies = "";
@@ -25,12 +28,16 @@ const SingleCountry = () => {
     currencies = currency.name;
     // console.log(country[0].population.toLocaleString("en-US"));
   }
+
   const population =
     country.length > 0 ? country[0].population.toLocaleString("en-US") : "";
-  return country.length < 1 ? (
+
+  return country.length < 1 && loading ? (
     <div>
       <LoadingSpinner />
     </div>
+  ) : country.length < 1 && !loading ? (
+    <div>check your internet connection</div>
   ) : (
     <div className={c.body}>
       <button className={c.back} onClick={() => history.goBack()}>
