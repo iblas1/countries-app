@@ -82,14 +82,14 @@ const SingleCountry = () => {
           <div className={c.border}>
             <p>
               <b>Border countries: </b>
+              {country[0].borders
+                ? country[0].borders.map((border) => (
+                    <span key={border} className={c.box}>
+                      {border}
+                    </span>
+                  ))
+                : []}
             </p>
-            {country[0].borders
-              ? country[0].borders.map((border) => (
-                  <div key={border} className={c.box}>
-                    {border}
-                  </div>
-                ))
-              : []}
           </div>
         </div>
       </div>
